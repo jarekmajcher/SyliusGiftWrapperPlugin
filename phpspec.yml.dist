@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: JarekMajcher\SyliusGiftWrapperPlugin
+        psr4_prefix: JarekMajcher\SyliusGiftWrapperPlugin

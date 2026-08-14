@@ -1,0 +1,17 @@
+jarekmajcher_sylius_gift_wrapper_plugin:
+    ui:
+        gift_wrap_method: Opakowanie prezentowe
+        gift_wrap_methods: Opakowania prezentowe
+        new_gift_wrap_method: Tworzenie opakowania prezentowego
+        edit_gift_wrap_method: Edytowanie opakowania prezentowego
+        gift_wraps_total: Koszt opakowań prezentowych
+        no_gift_wraps_charges: Brak opłat za pakowanie na prezent
+        dedication: Dedykacja
+        dedication_help: Dedykacja, którą zamieścimy na eleganckim zielonym blankiecie i włożymy do opakowania prezentowego. Pozostaw puste jeśli nie chcesz dodawać dedykacji.
+        instruction: Instrukcja dla pakującego
+        instruction_help: W tym miejscu możesz przekazać osobie, która będzie pakowała prezent instrukcje w jaki sposób zapakować Twój prezent. Napisz jakie produkty włożyć do tego pudełka a jakie pominąć.
+        gift_wraps: Opakowania prezentowe
+        gift_wrap: Opakowanie prezentowe
+        your_gift_wraps: Twoje opakowania na prezent
+        add_gift_wrap: Dodaj opakowanie na prezent
+        add_another_gift_wrap: Dodaj kolejne opakowanie na prezent

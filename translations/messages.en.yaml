@@ -1,0 +1,17 @@
+jarekmajcher_sylius_gift_wrapper_plugin:
+    ui:
+        gift_wrap_method: Gift wrapping
+        gift_wrap_methods: Gift wrappings
+        new_gift_wrap_method: Create gift wrap method
+        edit_gift_wrap_method: Edit gift wrap method
+        gift_wraps_total: Gift wrapping cost
+        no_gift_wraps_charges: No gift wrapping charges
+        dedication: Dedication
+        dedication_help: A dedication that we will place on an elegant green card and put inside the gift wrap. Leave blank if you do not wish to add a dedication.
+        instruction: Packer instructions
+        instruction_help: Here you can leave instructions for the person packing your gift. Specify which products should be included in this box and which to omit.
+        gift_wraps: Gift wraps
+        gift_wrap: Gift wrap
+        your_gift_wraps: Your gift wraps
+        add_gift_wrap: Add gift wrap
+        add_another_gift_wrap: Add another gift wrap

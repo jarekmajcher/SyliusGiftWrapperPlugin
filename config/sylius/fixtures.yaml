@@ -1,0 +1,38 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                jarekmajcher_gift_wrap_method:
+                    options:
+                        random: 4
+                        custom:
+                            -
+                                code: 'gift_premium'
+                                name: 'Premium'
+                                enabled: true
+                                price: 1500
+                                channels: [ 'FASHION_WEB' ]
+                                translations:
+                                    en_US:
+                                        name: 'Premium Wrap'
+                                        description: 'Elegant premium gift wrapping with a satin ribbon.'
+                                    pl_PL:
+                                        name: 'Opakowanie premium'
+                                        description: 'Eleganckie premium opakowanie na prezent z satynową wstążką.'
+                                images:
+                                    - '%jarekmajcher_gift_wrapper.plugin_dir%/fixtures/images/gift-premium.jpg'
+                            -
+                                code: 'gift_eco'
+                                name: 'Eco'
+                                enabled: true
+                                price: 800
+                                channels: [ 'FASHION_WEB' ]
+                                translations:
+                                    en_US:
+                                        name: 'Eco Wrap'
+                                        description: 'Recycled kraft paper wrapping, plastic-free.'
+                                    pl_PL:
+                                        name: 'Opakowanie ekonomiczne'
+                                        description: 'Opakowanie z papieru z recyklingu, bez plastiku.'
+                                images:
+                                    - '%jarekmajcher_gift_wrapper.plugin_dir%/fixtures/images/gift-eco.jpg'

@@ -1,0 +1,13 @@
+sylius_resource:
+    resources:
+        jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap_method:
+            classes:
+                model: JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrapMethod
+                form: JarekMajcher\SyliusGiftWrapperPlugin\Form\Type\GiftWrapMethodType
+            translation:
+                classes:
+                    model: JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrapMethodTranslation
+                    form: JarekMajcher\SyliusGiftWrapperPlugin\Form\Type\GiftWrapMethodTranslationType
+        jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap_method_image:
+            classes:
+                model: JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrapMethodImage

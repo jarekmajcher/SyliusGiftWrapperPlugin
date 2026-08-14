@@ -1,0 +1,64 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+<div class="ui hidden divider"></div>
+
+<h2 class="ui header">
+    <i class="gift icon"></i>
+    {% if cart.hasGiftWraps %}
+        {{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.add_another_gift_wrap'|trans }}:
+    {% else %}
+        {{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.add_gift_wrap'|trans }}:
+    {% endif %}
+</h2>
+
+{{ form_start(form, { 'attr': {'class': 'ui form', 'novalidate': 'novalidate' }, 'action': path('jarekmajcher_gift_wrapper_shop_gift_wrap_add'), 'method': 'POST' }) }}
+
+    {{ form_errors(form.giftWrapMethod) }}
+
+    <div class="ui four cards">
+        {% for choice in form.giftWrapMethod %}
+
+            {% set giftWrapMethod = form.giftWrapMethod.vars.choices[choice.vars.value].data %}
+
+            {% if giftWrapMethod.getMainImage() %}
+                {% set thumb = giftWrapMethod.getMainImage().path|imagine_filter('sylius_shop_product_thumbnail') %}
+            {% else %}
+                {% set thumb = asset('build/shop/images/200x200.png', 'shop') %}
+            {% endif %}
+
+            <div class="fluid card">
+                <label for="{{ choice.vars.id }}" style="cursor: pointer; margin-top: 0 !important;">
+                    <div class="image" style="aspect-ratio: 1/1;">
+                        <img src="{{ thumb }}" style="width: 100%; height: 100%;">
+                    </div>
+                    <div class="content">
+                        <div class="ui header small">
+                            {{ form_widget(choice) }} {{ giftWrapMethod.translation.name }}
+                        </div>
+                        <div class="meta" style="margin-top: 0.5em;">
+                            <span class="ui label" >
+                                {{ 'sylius.ui.price'|trans }}: {{ money.convertAndFormat(giftWrapMethod.price) }}
+                            </span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="two fields">
+        {{ form_row(form.dedication) }}
+        {{ form_row(form.instruction) }}
+    </div>
+
+    <button class="ui primary button" type="submit">
+        <i class="plus icon"></i>
+        {% if cart.hasGiftWraps %}
+            {{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.add_another_gift_wrap'|trans }}
+        {% else %}
+            {{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.add_gift_wrap'|trans }}
+        {% endif %}
+    </button>
+{{ form_end(form) }}

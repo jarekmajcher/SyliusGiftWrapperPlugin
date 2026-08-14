@@ -1,0 +1,9 @@
+jarekmajcher_sylius_gift_wrapper_shop:
+    resource: "@JarekMajcherSyliusGiftWrapperPlugin/config/routes/shop.yaml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+
+jarekmajcher_sylius_gift_wrapper_admin:
+    resource: "@JarekMajcherSyliusGiftWrapperPlugin/config/routes/admin.yaml"
+    prefix: /admin

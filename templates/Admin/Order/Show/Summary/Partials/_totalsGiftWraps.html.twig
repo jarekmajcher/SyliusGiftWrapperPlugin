@@ -1,0 +1,50 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
+
+<tr>
+    <td colspan="5">
+        {% if not order.adjustments('gift_wrap').isEmpty() %}
+            <div class="ui relaxed divided list">
+                <div class="item"><strong>{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.gift_wraps'|trans }}:</strong></div>
+                {% for giftWrapItem in order.giftWraps %}
+                    {% for adjustment in giftWrapItem.adjustments('gift_wrap') %}
+                        <div class="item">
+                            <div class="right floated">{{ money.format(adjustment.amount, order.currencyCode) }}</div>
+                            <div class="content">
+                                <div class="description">
+                                    <strong>{{ adjustment.label }}</strong>:
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for adjustment in giftWrapItem.adjustments(taxAdjustment) %}
+                        {% if 'giftWrapCode' in adjustment.details|keys %}
+                            <div class="item{% if adjustment.isNeutral %} tax-disabled{% endif %}">
+                                <div class="right floated">
+                                    {{ money.format(adjustment.amount, order.currencyCode) }}
+                                    {% if adjustment.isNeutral %}
+                                        <small>({{ 'sylius.ui.included_in_price'|trans }})</small>
+                                    {% endif %}
+                                </div>
+                                <div class="content">
+                                    <div class="description">
+                                        <strong{% if adjustment.isNeutral %} class="tax-disabled"{% endif %}>{{ adjustment.label }}</strong>:
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p><small>{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.no_gift_wraps_charges'|trans }}</small></p>
+        {% endif %}
+    </td>
+
+    <td colspan="4" class="right aligned">
+        <strong>{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.gift_wraps_total'|trans }}</strong>:
+        {{ money.format(order.giftWrapsTotal, order.currencyCode) }}
+    </td>
+</tr>

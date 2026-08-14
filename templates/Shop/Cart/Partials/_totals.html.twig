@@ -1,0 +1,10 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% if cart.hasGiftWraps() %}
+    {% set giftWrapsSubtotal = cart.getGiftWrapsTotal() %}
+
+    <tr>
+        <td>{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.gift_wraps_total'|trans }}:</td>
+        <td class="right aligned">{{ money.convertAndFormat(giftWrapsSubtotal) }}</td>
+    </tr>
+{% endif %}

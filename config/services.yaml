@@ -1,0 +1,77 @@
+imports:
+    - { resource: "sylius/resources.yaml" }
+    - { resource: "sylius/grid.yaml" }
+    - { resource: "sylius/ui.yaml" }
+    - { resource: "sylius/fixtures.yaml" }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Event listeners
+    JarekMajcher\SyliusGiftWrapperPlugin\EventListener\AdminMainMenuListener:
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    JarekMajcher\SyliusGiftWrapperPlugin\EventListener\GiftWrapMethodImageUploadListener:
+        arguments:
+            - '@sylius.image_uploader'
+        tags:
+            - { name: kernel.event_listener, event: jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap_method.pre_create, method: uploadImage }
+            - { name: kernel.event_listener, event: jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap_method.pre_update, method: uploadImage }
+
+    # Controllers
+    JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop\AddGiftWrapAction:
+        arguments:
+            $cartContext: '@sylius.context.cart'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $eventDispatcher: '@event_dispatcher'
+            $translator: '@translator'
+        tags: [ 'controller.service_arguments' ]
+
+    JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop\RemoveGiftWrapAction:
+        arguments:
+            $cartContext: '@sylius.context.cart'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $eventDispatcher: '@event_dispatcher'
+        tags: [ 'controller.service_arguments' ]
+
+    # Forms
+    JarekMajcher\SyliusGiftWrapperPlugin\Form\Type\GiftWrapType:
+        arguments:
+            $channelContext: '@sylius.context.channel'
+        tags: [ 'form.type' ]
+
+    # Processors and Applicators
+    JarekMajcher\SyliusGiftWrapperPlugin\Processor\GiftWrapOrderProcessor:
+        arguments:
+            $adjustmentFactory: '@sylius.factory.adjustment'
+        tags:
+            - { name: sylius.order_processor }
+
+    JarekMajcher\SyliusGiftWrapperPlugin\Taxation\Applicator\GiftWrapTaxesApplicator:
+        arguments:
+            - '@sylius.tax_calculator'
+            - '@sylius.factory.adjustment'
+            - '@sylius.tax_rate_resolver'
+        tags:
+            - { name: sylius.taxation.items.applicator }
+            - { name: sylius.taxation.item_units.applicator }
+
+    # Fixtures
+    JarekMajcher\SyliusGiftWrapperPlugin\Fixture\GiftWrapMethodFixture:
+        arguments:
+            $giftWrapMethodExampleFactory: '@JarekMajcher\SyliusGiftWrapperPlugin\Fixture\Factory\GiftWrapMethodExampleFactory'
+        tags:
+            - { name: sylius_fixtures.fixture }
+
+    JarekMajcher\SyliusGiftWrapperPlugin\Fixture\Factory\GiftWrapMethodExampleFactory:
+        arguments:
+            $giftWrapMethodFactory: '@jarekmajcher_sylius_gift_wrapper_plugin.factory.gift_wrap_method'
+            $giftWrapMethodTranslationFactory: '@jarekmajcher_sylius_gift_wrapper_plugin.factory.gift_wrap_method_translation'
+            $channelRepository: '@sylius.repository.channel'
+            $localeRepository: '@sylius.repository.locale'
+            $imageFactory: '@jarekmajcher_sylius_gift_wrapper_plugin.factory.gift_wrap_method_image'
+            $imageUploader: '@sylius.image_uploader'
+            $imagesDirectory: '%jarekmajcher_gift_wrapper.plugin_dir%/fixtures/images/'

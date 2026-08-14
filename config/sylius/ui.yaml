@@ -1,0 +1,13 @@
+sylius_ui:
+    events:
+        sylius.shop.cart.items:
+            blocks:
+                gift_wraps:
+                    template: "@JarekMajcherSyliusGiftWrapperPlugin/Shop/Cart/Blocks/_add_gift_wrap.html.twig"
+                    context: [sylius_shop]
+                    priority: 4
+        sylius.admin.order.show.summary:
+            blocks:
+                gift_wraps_table:
+                    template: "@JarekMajcherSyliusGiftWrapperPlugin/Admin/Order/Show/_gift_wraps_table.html.twig"
+                    priority: 20

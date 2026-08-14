@@ -1,0 +1,3 @@
+jarekmajcher_sylius_gift_wrapper_plugin:
+    gift_wrap_method:
+        empty: Please select a gift wrapping type.

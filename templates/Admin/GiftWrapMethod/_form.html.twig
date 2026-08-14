@@ -1,0 +1,35 @@
+{% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationForm %}
+
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+
+{% form_theme form '@JarekMajcherSyliusGiftWrapperPlugin/Admin/Form/theme.html.twig' %}
+
+{{ form_errors(form) }}
+
+<div class="ui two column stackable grid">
+    <div class="column">
+        <div class="ui segment">
+            {{ form_row(form.code) }}
+            {{ form_row(form.enabled) }}
+        </div>
+        <div class="ui segment">
+            {{ form_row(form.name) }}
+            {{ form_row(form.price) }}
+            {{ form_row(form.taxCategory) }}
+        </div>
+    </div>
+    <div class="column">
+        {{ form_row(form.channels) }}
+    </div>
+</div>
+
+<div class="ui hidden divider"></div>
+
+{{ translationForm(form.translations) }}
+
+<div class="ui hidden divider"></div>
+
+<h3 class="ui top attached header">{{ 'sylius.ui.media'|trans }}</h3>
+<div class="ui attached segment">
+    {{ form_row(form.images, {'label': false}) }}
+</div>

@@ -1,0 +1,11 @@
+jarekmajcher_gift_wrapper_shop_gift_wrap_add:
+    path: /cart/add-gift-wrap
+    defaults:
+        _controller: JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop\AddGiftWrapAction
+
+jarekmajcher_gift_wrapper_shop_gift_wrap_remove:
+    path: /cart/remove-gift-wrap/{id}
+    defaults:
+        _controller: JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop\RemoveGiftWrapAction
+    requirements:
+        id: '\d+'

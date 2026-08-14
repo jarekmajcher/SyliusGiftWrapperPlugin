@@ -1,0 +1,51 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+
+{% if order.giftWraps|length %}
+    <h4 class="ui top attached styled header">
+        <i class="tags icon"></i>
+        {{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.gift_wraps'|trans }}
+    </h4>
+
+    <div class="ui attached segment" style="overflow-x: auto;">
+        <table class="ui celled compact small table order-summary-table">
+            <thead>
+            <tr>
+                <th class="">{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.gift_wrap'|trans }}</th>
+                <th class="six wide center aligned">{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.dedication'|trans }}</th>
+                <th class="six wide center aligned">{{ 'jarekmajcher_sylius_gift_wrapper_plugin.ui.instruction'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order.giftWraps %}
+
+                {% if item.giftWrapMethod.getMainImage() %}
+                    {% set thumb = item.giftWrapMethod.getMainImage().path|imagine_filter('sylius_admin_product_tiny_thumbnail') %}
+                {% else %}
+                    {% set thumb = asset('build/shop/images/200x200.png', 'shop') %}
+                {% endif %}
+
+                <tr>
+                    <td class="single line">
+                        <div class="ui header">
+                            <img src="{{ thumb }}" alt="" class="ui bordered image sylius-grid-image">
+                            <div class="content">
+                                <div>{{ item.giftWrapMethod.name }}</div>
+                                <span class="sub header">{{ item.giftWrapMethod.code }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {{ item.dedication|default('<div class="ui tiny label">' ~ 'sylius.ui.empty'|trans ~ '</div>')|raw|nl2br }}
+                    </td>
+                    <td>
+                        {{ item.instruction|default('<div class="ui tiny label">' ~ 'sylius.ui.empty'|trans ~ '</div>')|raw|nl2br }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="ui hidden divider"></div>
+{% endif %}

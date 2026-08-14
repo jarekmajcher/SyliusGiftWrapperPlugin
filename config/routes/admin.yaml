@@ -1,0 +1,16 @@
+jarekmajcher_gift_wrapper_admin_gift_wrap_method:
+    resource: |
+        alias: jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap_method
+        section: admin
+        path: /gift-wrap-method
+        templates: "@SyliusAdmin/Crud"
+        grid: jarekmajcher_sylius_gift_wrapper_plugin_admin_gift_wrap_method
+        except: ['show']
+        redirect: update
+        permission: true
+        vars:
+            all:
+                icon: gift
+                templates:
+                    form: "@JarekMajcherSyliusGiftWrapperPlugin/Admin/GiftWrapMethod/_form.html.twig"
+    type: sylius.resource
