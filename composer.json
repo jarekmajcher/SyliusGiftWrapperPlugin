@@ -1,0 +1,9 @@
+{
+  "name": "jarekmajcher/sylius-gift-wrapper-plugin",
+  "type": "sylius-plugin",
+  "keywords": [
+    "sylius",
+    "sylius-plugin"
+  ],
+  "license": "proprietary"
+}
