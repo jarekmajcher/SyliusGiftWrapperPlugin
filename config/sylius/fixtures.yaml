@@ -10,6 +10,7 @@ sylius_fixtures:
                                 code: 'gift_premium'
                                 name: 'Premium'
                                 enabled: true
+                                position: 1
                                 price: 1500
                                 channels: [ 'FASHION_WEB' ]
                                 translations:
@@ -25,6 +26,7 @@ sylius_fixtures:
                                 code: 'gift_eco'
                                 name: 'Eco'
                                 enabled: true
+                                position: 2
                                 price: 800
                                 channels: [ 'FASHION_WEB' ]
                                 translations:

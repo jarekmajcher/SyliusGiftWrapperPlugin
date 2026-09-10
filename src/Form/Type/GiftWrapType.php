@@ -33,6 +33,7 @@ final class GiftWrapType extends AbstractType
                     return $er->createQueryBuilder('gwm')
                         ->andWhere(':channel MEMBER OF gwm.channels')
                         ->andWhere('gwm.enabled = true')
+                        ->orderBy('gwm.position', 'ASC')
                         ->setParameter('channel', $channel);
                 },
                 'choice_label' => 'code',

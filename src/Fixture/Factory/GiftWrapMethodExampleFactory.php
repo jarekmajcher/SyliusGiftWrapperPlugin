@@ -29,6 +29,8 @@ final class GiftWrapMethodExampleFactory implements ExampleFactoryInterface
     /** @var string[] */
     private ?array $availableImages = [];
 
+    private static int $positionCounter = 3;
+
     public function __construct(
         private FactoryInterface $giftWrapMethodFactory,
         private FactoryInterface $giftWrapMethodTranslationFactory,
@@ -53,6 +55,7 @@ final class GiftWrapMethodExampleFactory implements ExampleFactoryInterface
 
         $giftWrapMethod->setCode($options['code']);
         $giftWrapMethod->setEnabled($options['enabled']);
+        $giftWrapMethod->setPosition($options['position']);
         $giftWrapMethod->setPrice($options['price']);
         $giftWrapMethod->setName($options['name']);
 
@@ -99,6 +102,10 @@ final class GiftWrapMethodExampleFactory implements ExampleFactoryInterface
             })
 
             ->setAllowedTypes('enabled', 'bool')
+
+            ->setDefault('position', function (Options $options): int {
+                return self::$positionCounter++;
+            })
 
             ->setDefault('channels', LazyOption::randomOnes($this->channelRepository, 3))
             ->setAllowedTypes('channels', 'array')

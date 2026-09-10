@@ -12,6 +12,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
 use Sylius\Bundle\TaxationBundle\Form\Type\TaxCategoryChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
@@ -35,6 +36,9 @@ final class GiftWrapMethodType extends AbstractResourceType
             ])
             ->add('enabled', CheckboxType::class, [
                 'label' => 'sylius.ui.enabled',
+            ])
+            ->add('position', NumberType::class, [
+                'label' => 'sylius.ui.position',
             ])
             ->add('channels', ChannelChoiceType::class, [
                 'label' => 'sylius.ui.channels',

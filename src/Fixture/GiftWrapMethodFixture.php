@@ -28,6 +28,7 @@ final class GiftWrapMethodFixture extends AbstractResourceFixture
                 ->scalarNode('code')->end()
                 ->scalarNode('name')->end()
                 ->booleanNode('enabled')->end()
+                ->integerNode('position')->end()
                 ->arrayNode('channels')->scalarPrototype()->end()->end()
                 ->integerNode('price')->end()
                 ->arrayNode('translations')

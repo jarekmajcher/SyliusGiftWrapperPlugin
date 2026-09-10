@@ -46,6 +46,9 @@ class GiftWrapMethod implements TranslatableInterface, ResourceInterface, Taxabl
     private string $name = '';
 
     #[ORM\Column(type: Types::INTEGER)]
+    private int $position = 0;
+
+    #[ORM\Column(type: Types::INTEGER)]
     private int $price = 0;
 
     #[ORM\ManyToOne(targetEntity: TaxCategoryInterface::class)]
@@ -101,6 +104,16 @@ class GiftWrapMethod implements TranslatableInterface, ResourceInterface, Taxabl
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
     }
 
     public function getPrice(): int

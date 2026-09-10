@@ -14,6 +14,7 @@ class GiftWrapMethodRepository extends EntityRepository
         $result = $this->createQueryBuilder('gwm')
             ->andWhere(':channel MEMBER OF gwm.channels')
             ->andWhere('gwm.enabled = true')
+            ->orderBy('gwm.position', 'ASC')
             ->setParameter('channel', $channel)
             ->getQuery()
             ->getResult();
