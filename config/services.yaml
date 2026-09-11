@@ -25,6 +25,8 @@ services:
     JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop\AddGiftWrapAction:
         arguments:
             $cartContext: '@sylius.context.cart'
+            $channelContext: '@sylius.context.channel'
+            $giftWrapMethodRepository: '@jarekmajcher_sylius_gift_wrapper_plugin.repository.gift_wrap_method'
             $entityManager: '@doctrine.orm.entity_manager'
             $eventDispatcher: '@event_dispatcher'
             $translator: '@translator'
@@ -39,8 +41,6 @@ services:
 
     # Forms
     JarekMajcher\SyliusGiftWrapperPlugin\Form\Type\GiftWrapType:
-        arguments:
-            $channelContext: '@sylius.context.channel'
         tags: [ 'form.type' ]
 
     # Processors and Applicators

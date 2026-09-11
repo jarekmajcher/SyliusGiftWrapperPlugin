@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace JarekMajcher\SyliusGiftWrapperPlugin\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrapMethod;
 use JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrap;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,24 +15,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class GiftWrapType extends AbstractType
 {
-    public function __construct(
-        private ChannelContextInterface $channelContext,
-    ) {
-    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $channel = $this->channelContext->getChannel();
-
         $builder
             ->add('giftWrapMethod', EntityType::class, [
                 'class' => GiftWrapMethod::class,
-                'query_builder' => function (EntityRepository $er) use ($channel): QueryBuilder {
-                    return $er->createQueryBuilder('gwm')
-                        ->andWhere(':channel MEMBER OF gwm.channels')
-                        ->andWhere('gwm.enabled = true')
-                        ->orderBy('gwm.position', 'ASC')
-                        ->setParameter('channel', $channel);
-                },
+                'choices' => $options['gift_wrap_methods'],
                 'choice_label' => 'code',
                 'expanded' => true,
                 'multiple' => false,
@@ -71,6 +56,9 @@ final class GiftWrapType extends AbstractType
             'data_class' => GiftWrap::class,
             'csrf_protection' => true,
         ]);
+
+        $resolver->setRequired('gift_wrap_methods');
+        $resolver->setAllowedTypes('gift_wrap_methods', 'array');
     }
 
     public function getBlockPrefix(): string

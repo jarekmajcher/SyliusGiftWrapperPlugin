@@ -7,6 +7,8 @@ namespace JarekMajcher\SyliusGiftWrapperPlugin\Controller\Shop;
 use JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrap;
 use JarekMajcher\SyliusGiftWrapperPlugin\Entity\GiftWrapMethod;
 use JarekMajcher\SyliusGiftWrapperPlugin\Form\Type\GiftWrapType;
+use JarekMajcher\SyliusGiftWrapperPlugin\Repository\GiftWrapMethodRepository;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Order\SyliusCartEvents;
@@ -21,6 +23,8 @@ class AddGiftWrapAction extends AbstractController
 {
     public function __construct(
         private CartContextInterface $cartContext,
+        private ChannelContextInterface $channelContext,
+        private GiftWrapMethodRepository $giftWrapMethodRepository,
         private EntityManagerInterface $entityManager,
         private EventDispatcherInterface $eventDispatcher,
         private TranslatorInterface $translator
@@ -30,16 +34,27 @@ class AddGiftWrapAction extends AbstractController
     public function __invoke(Request $request): Response
     {
         $cart = $this->cartContext->getCart();
+        $channel = $this->channelContext->getChannel();
+
+        $giftWrapMethods = $this->giftWrapMethodRepository->findEnabledByChannel($channel);
+
+        if ($giftWrapMethods === []) {
+            $this->addFlash('error', 'jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap.no_methods_available');
+
+            return new Response('');
+        }
 
         $giftWrap = new GiftWrap();
 
-        $form = $this->createForm(GiftWrapType::class, $giftWrap);
+        $form = $this->createForm(GiftWrapType::class, $giftWrap, [
+            'gift_wrap_methods' => $giftWrapMethods,
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
                 /** @var GiftWrapMethod $giftWrapMethod  */
                 $giftWrapMethod = $giftWrap->getGiftWrapMethod();
                 $price = $giftWrapMethod->getPrice();
@@ -67,15 +82,12 @@ class AddGiftWrapAction extends AbstractController
                     ));
                 }
 
-                $errorLines = array_unique($reasons);
-
                 $this->addFlash('error', [
                     'message' => 'jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap.add_to_cart.error',
                     'parameters' => [
                         '%reason%' => implode(', ', $reasons),
                     ],
                 ]);
-
             }
 
             return $this->redirectToRoute('sylius_shop_cart_summary');
