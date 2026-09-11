@@ -39,8 +39,6 @@ class AddGiftWrapAction extends AbstractController
         $giftWrapMethods = $this->giftWrapMethodRepository->findEnabledByChannel($channel);
 
         if ($giftWrapMethods === []) {
-            $this->addFlash('error', 'jarekmajcher_sylius_gift_wrapper_plugin.gift_wrap.no_methods_available');
-
             return new Response('');
         }
 
